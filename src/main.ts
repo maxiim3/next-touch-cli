@@ -3,8 +3,13 @@ import {Command} from "commander"
 import inquirer from "inquirer"
 import {createFile, pathExists, readFile, writeFile} from "./utils"
 
+// Configuration file name
 const CONFIG_FILE_NAME = "next-touch.config.js"
 
+/**
+ * Check if the configuration file exists in the project directory
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the configuration file exists
+ */
 async function checkForConfigFile() {
 	console.log("Parsing the project and looking for a configuration file")
 	const configFileExists = await pathExists(`./${CONFIG_FILE_NAME}`)
@@ -16,6 +21,7 @@ async function checkForConfigFile() {
 	return configFileExists
 }
 
+// Type for configuration file options
 export type configFileOptionsProps = {
 	languagePreference: "JavaScript" | "TypeScript"
 	stylingPreference: "SASS Modules" | "Tailwind CSS" | "Styled Components" | "None"
@@ -25,6 +31,10 @@ export type configFileOptionsProps = {
 	apiPath: string
 }
 
+/**
+ * Check the integrity of the configuration file. It should have six properties and match the keys defined
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the configuration file has correct structure
+ */
 async function configFileIntegrity() {
 	const data = await readFile(`./${CONFIG_FILE_NAME}`, "utf-8")
 
@@ -34,7 +44,6 @@ async function configFileIntegrity() {
 
 	// Use the exec method of the RegExp object to find the first match in the string
 	let getDataInBrackets = regex.exec(data)[1]
-
 	const trimData = getDataInBrackets.trim()
 
 	const cleanData = trimData.replace("\n", "")
@@ -65,6 +74,11 @@ async function configFileIntegrity() {
 	)
 }
 
+/**
+ * Initialize the configuration file. If the file does not exist, it is created. If it exists but does not have the correct structure, it is overwritten
+ * @param {Object} props Object with property createFile of boolean type indicating whether to create a new file
+ * @returns {Promise<void>} A promise that resolves when the operation is completed
+ */
 async function initConfigFile(props: {createFile: boolean}) {
 	try {
 		const configurationFileOptions: configFileOptionsProps = await inquirer.prompt([
@@ -122,6 +136,9 @@ async function initConfigFile(props: {createFile: boolean}) {
 	}
 }
 
+/**
+ * Entry point of the application. It sets up the Command object and processes the user input
+ */
 function main() {
 	const program = new Command()
 
@@ -129,8 +146,8 @@ function main() {
 		.name("next touch")
 		.version("0.0.1")
 		.description("A useful cli tool for simplifying next.js workflow")
-
 	// program.option("--second").option("-f, --first")
+	// The action that will be taken when the command is run
 	program.action(async (str, options) => {
 		const configFile = await checkForConfigFile()
 
@@ -157,9 +174,11 @@ function main() {
 		console.log(userInputs)
 	})
 
+	// Parse the command line arguments
 	program.parse()
 
 	// console.log(program.opts())
 }
 
+// Export the main function
 module.exports = main
