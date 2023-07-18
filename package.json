@@ -1,0 +1,39 @@
+{
+  "name": "next-touch",
+  "version": "0.0.1",
+  "description": "A useful cli tool for simplifying next.js workflow",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev:js": "tsc index.ts &&  node index.js",
+    "dev": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "index.js",
+    "src/**/*"
+  ],
+  "bin": {
+    "next-touch": "./index.js"
+  },
+  "author": "maxiim3",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.1.1",
+    "inquirer": "^7.3.3",
+    "path": "^0.12.7",
+    "shelljs": "^0.8.5",
+    "yargs": "^17.7.2"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
