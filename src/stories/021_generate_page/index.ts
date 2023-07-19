@@ -1,4 +1,6 @@
-export default function initPageStory() {
+import {configFileOptionsProps} from "../../types"
+
+export default function initPageStory(configOptions: configFileOptionsProps) {
 	console.log("You chose to create a page")
 
 	//0. Ask the user if they want to create a page, error, loading, layout or template.

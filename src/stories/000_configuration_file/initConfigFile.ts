@@ -1,7 +1,7 @@
 import inquirer from "inquirer"
-import {createFile, writeFile} from "../../utils"
 import {CONFIG_FILE_NAME} from "../../constants"
 import {configFileOptionsProps} from "../../types"
+import {createFile, writeFile} from "../../helper/fsUtils"
 
 /**
  * Initialize the configuration file. If the file does not exist, it is created. If it exists but does not have the correct structure, it is overwritten
@@ -61,6 +61,8 @@ export async function initConfigFile(props: {createFile: boolean}) {
 		module.exports = config
 		`
 		await writeFile(`./${CONFIG_FILE_NAME}`, template)
+
+		return configurationFileOptions
 	} catch (err) {
 		console.error(`Something went wrong while creating the configuration file : ${err}`)
 	}

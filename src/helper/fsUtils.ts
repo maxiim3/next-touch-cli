@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 // Function to read a file
-const readFile = async (filePath: string, utf8: string = "utf8") => {
+export const readFile = async (filePath: string, utf8: string = "utf8") => {
 	try {
 		const data = await fs.readFile(filePath, utf8)
 
@@ -11,7 +11,7 @@ const readFile = async (filePath: string, utf8: string = "utf8") => {
 }
 // function to create a file
 
-const createFile = async (filePath: string) => {
+export const createFile = async (filePath: string) => {
 	try {
 		const result = await fs.createFile(filePath)
 		console.log(`File has been created at ${filePath}`)
@@ -21,7 +21,7 @@ const createFile = async (filePath: string) => {
 	}
 }
 // Function to write data to a file
-const writeFile = async (filePath: string, data: any) => {
+export const writeFile = async (filePath: string, data: any) => {
 	try {
 		const result = await fs.writeFile(filePath, data)
 		console.log(`Data has been written to ${filePath}`)
@@ -31,7 +31,7 @@ const writeFile = async (filePath: string, data: any) => {
 	}
 }
 // Function to check if a file or directory exists
-const pathExists = async (path: string) => {
+export const pathExists = async (path: string) => {
 	try {
 		const exists = await fs.pathExists(path)
 		return exists
@@ -41,7 +41,7 @@ const pathExists = async (path: string) => {
 }
 // Function to copy a file
 
-const copyFile = async (source: string, destination: string) => {
+export const copyFile = async (source: string, destination: string) => {
 	try {
 		await fs.copy(source, destination)
 		console.log(`File has been copied from ${source} to ${destination}`)
@@ -50,7 +50,7 @@ const copyFile = async (source: string, destination: string) => {
 	}
 }
 
-const readDirectory = async (dirPath: string) => {
+export const readDirectory = async (dirPath: string) => {
 	try {
 		const data = await fs.readdir(dirPath)
 		return data
@@ -59,7 +59,7 @@ const readDirectory = async (dirPath: string) => {
 	}
 }
 // Function to create a directory
-const createDirectory = async (dirPath: string) => {
+export const createDirectory = async (dirPath: string) => {
 	try {
 		const result = await fs.ensureDir(dirPath)
 		console.log(`Directory has been created at ${dirPath}`)
@@ -68,5 +68,3 @@ const createDirectory = async (dirPath: string) => {
 		console.error(`Error creating directory: ${err}`)
 	}
 }
-
-export {readFile, writeFile, pathExists, copyFile, createFile, createDirectory, readDirectory}

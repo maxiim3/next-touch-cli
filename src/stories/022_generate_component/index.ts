@@ -1,4 +1,6 @@
-export default function initComponentStory() {
+import {configFileOptionsProps} from "../../types"
+
+export default function initComponentStory(configOptions: configFileOptionsProps) {
 	console.log("You chose to create a component")
 
 	//1. ask for the component's name -> ex: Button

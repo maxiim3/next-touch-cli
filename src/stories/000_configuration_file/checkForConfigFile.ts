@@ -1,5 +1,5 @@
-import {pathExists} from "../../utils"
 import {CONFIG_FILE_NAME} from "../../constants"
+import {pathExists} from "../../helper/fsUtils"
 
 /**
  * Check if the configuration file exists in the project directory

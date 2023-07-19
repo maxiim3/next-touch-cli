@@ -1,15 +1,15 @@
-import {readFile} from "../../utils"
 import {CONFIG_FILE_NAME} from "../../constants"
 import {configFileOptionsProps} from "../../types"
+import {readFile} from "../../helper/fsUtils"
 
 /**
  * Check the integrity of the configuration file. It should have six properties and match the keys defined
- * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the configuration file has correct structure
+ * @returns {Promise<{data:any, integrity:Boolean}>} A promise that resolves to a boolean indicating whether the configuration file has correct structure, **and the related data to pass em on to the next steps**
  */
 export async function configFileIntegrity() {
 	const data = await readFile(`./${CONFIG_FILE_NAME}`, "utf-8")
 
-	if (data === "") return false
+	if (data === "") return {integrity: false, data: {}}
 	// Regular expression to match content between curly braces
 	const regex = /{([^}]+)}/g
 
@@ -40,8 +40,12 @@ export async function configFileIntegrity() {
 		"apiPath",
 	]
 
-	if (Object.keys(configExtracted).length === 0) return false
-	if (Object.keys(configExtracted).length !== validKeys.length) return false
+	if (Object.keys(configExtracted).length === 0) return {integrity: false, data: {}}
+	if (Object.keys(configExtracted).length !== validKeys.length)
+		return {integrity: false, data: {}}
 
-	return Object.keys(configExtracted).every(key => validKeys.includes(key))
+	return {
+		integrity: Object.keys(configExtracted).every(key => validKeys.includes(key)),
+		data: configExtracted,
+	}
 }
