@@ -52,6 +52,7 @@ export async function initConfigFile(props: {createFile: boolean}) {
 
 		console.log(configurationFileOptions)
 		props.createFile && (await createFile(`./${CONFIG_FILE_NAME}`))
+
 		const template = `
 		// next-touch configuration file
 		const config = 

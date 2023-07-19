@@ -2,21 +2,21 @@ export default function initComponentStory() {
 	console.log("You chose to create a component")
 
 	//1. ask for the component's name -> ex: Button
-	//2. ask for file path : do the user want to update it ?
-	// 	- yes : user prompts the new path ex: app/(pages)/about
+	//2. parse the configuration file to get the component's path, and check if atomicDesign is enabled
+	//3. Atomic Design Enabled? ask for the component's type -> ex: atom, molecule, organism, template, page && continue : continue
+	//4. Does the user want to update the component's path ?
+	// 	- yes : user prompts the new path ex: components/Button	-> continue
 	// 	- no : continue
-	//3. check if the path to file exists : if not, create it. continue
-	//4. check if the file page/template/loading/layout/error exists : if exists, ask if the user wants to overwrite it ?
-	// 	- yes : continue
-	// 	- no : exit
-	//5. if file is a page : if not go to step 6.
-	//  5.1 Does the page fetches data ?
-	// 		- yes : does the user wants to cache the data ?
-	// 			- yes : will add a fetch and cache template
-	// 			- no : will add a fetch template without caching
-	// 		- no : continue
-	// 	5.2 Does the user wants to update the page metadata ?
-	// 		- yes : will add a metadata template
-	// 		- no : continue
-	//6. Success ex: add the file  with the options and proper template at app/(pages)/about/file-type.tsx/template.tsx/error.tsx ...
+	//5. check if the path to file exists
+	// 			? ( Ask it the user wants to overwrite it ? continue : exit  )
+	// 			:
+	//6. is the component a client or a server component ?
+	//7. initiate Props template
+	//8. parse the configuration file to get the styling option :
+	// 	- if styling option is css-module : initiate css-module template and create the file like so :
+	//   			components/
+	//   				Button/
+	//   					Button.tsx
+	//   					Button.module.css
+	// 	- otherwise : create @components/Button.tsx with the proper template
 }
