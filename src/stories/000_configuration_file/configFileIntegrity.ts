@@ -1,5 +1,6 @@
 import {readFile} from "../../utils"
 import {CONFIG_FILE_NAME} from "../../constants"
+import {configFileOptionsProps} from "../../types"
 
 /**
  * Check the integrity of the configuration file. It should have six properties and match the keys defined
@@ -22,7 +23,7 @@ export async function configFileIntegrity() {
 	const extractKeyValues = splitData.map((item: string) => {
 		return item.trim().replace(' "', "").replace('"', "").trim().split(":")
 	})
-	const configExtracted = {}
+	const configExtracted: Partial<configFileOptionsProps> = {}
 	extractKeyValues.forEach((item: string[]) => {
 		const [key, value] = item
 		if (!key || !value) return
@@ -30,16 +31,17 @@ export async function configFileIntegrity() {
 		configExtracted[key] = value
 	})
 
-	if (Object.keys(configExtracted).length === 0) return false
-	if (Object.keys(configExtracted).length !== 6) return false
+	const validKeys = [
+		"languagePreference",
+		"stylingPreference",
+		"pagePath",
+		"componentPath",
+		"atomicDesign",
+		"apiPath",
+	]
 
-	return Object.keys(configExtracted).every(
-		key =>
-			key === "languagePreference" ||
-			key === "stylingPreference" ||
-			key === "pagePath" ||
-			key === "componentPath" ||
-			key === "atomicDesign" ||
-			key === "apiPath"
-	)
+	if (Object.keys(configExtracted).length === 0) return false
+	if (Object.keys(configExtracted).length !== validKeys.length) return false
+
+	return Object.keys(configExtracted).every(key => validKeys.includes(key))
 }

@@ -7,3 +7,9 @@ export type configFileOptionsProps = {
 	atomicDesign: boolean
 	apiPath: string
 }
+
+export type flagsProps = {
+	page?: boolean
+	component?: boolean
+	api?: boolean
+}

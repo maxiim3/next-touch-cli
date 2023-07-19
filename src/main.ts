@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import {Command} from "commander"
-import inquirer from "inquirer"
 import configurationFileStory from "./stories/000_configuration_file"
+import {featureTypeStory} from "./stories/010_feature_type"
+import {flagsProps} from "./types"
 
 /**
  * Entry point of the application. It sets up the Command object and processes the user input
@@ -15,23 +16,19 @@ function main() {
 		.description("A useful cli tool for simplifying next.js workflow")
 	// program.option("--second").option("-f, --first")
 	// The action that will be taken when the command is run
-	program.action(async (str, options) => {
-		await configurationFileStory()
+	program
+		.option("-p, --page", "Create a new page")
+		.option("-c, --component", "Create a new component")
+		.option("-a, --api", "Create a new api route")
 
-		const userInputs = await inquirer.prompt([
-			{
-				name: "userName",
-				message: "What is your name ?",
-				type: "input",
-			},
-			{
-				name: "techno",
-				message: "Pick a Techno",
-				type: "list",
-				choices: ["React", "Next.js"],
-			},
-		])
-		console.log(userInputs)
+	program.action(async (options: flagsProps) => {
+		const numberOfFlags = Object.values(options).filter(value => value).length
+		if (numberOfFlags > 1) {
+			console.error("You can only use one flag at a time")
+			process.exit(1)
+		}
+		await configurationFileStory()
+		await featureTypeStory(options)
 	})
 
 	// Parse the command line arguments
